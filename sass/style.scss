@@ -1,0 +1,35 @@
+@font-face {
+  font-family: Lato-Black;
+  font-style: normal;
+  font-weight: normal;
+  src: local('Lato-Black'), url(/fonts/Lato-Black.ttf);
+}
+
+$mainFont: Lato-Black, sans-serif;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-family: $mainFont;
+  background-color: #ffffff;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  color: #4f4f4f;
+  line-height: 42px;
+}
+
+.container{
+  width: 708px;
+  height: 4059px;
+}
+
+.standard{
+  margin-top: 133px;
+}
