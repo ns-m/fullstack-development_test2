@@ -2,7 +2,7 @@
   font-family: Lato-Black;
   font-style: normal;
   font-weight: normal;
-  src: local('Lato-Black'), url(/fonts/Lato-Black.ttf);
+  src: local('Lato-Black'), url(../fonts/Lato-Black.ttf);
 }
 
 $mainFont: Lato-Black, sans-serif;
@@ -104,7 +104,7 @@ html {
 
 .stdButton1, .stdButton2 {
   border-radius: 0.3em;
-  box-shadow: 0 0 0 60px #28a290 inset, .1em .1em .2em #268d7a;
+  box-shadow: 0px 2px 4.85px 0.15px #268d7a;
 }
 
 .stdButton3, .stdButton4 {
@@ -112,12 +112,17 @@ html {
   box-shadow: 0 0 0 60px $color2 inset, .1em .1em .2em #912f17;
 }
 
-.stdButton2:hover {
-  //width: 49px;
-  //height: 49px;
-  //background-color: #fafafa;
-  //opacity: 0.3;
-  cursor: url("pics/ellipse.cur"), pointer;
+.stdButton1:hover, .stdButton3:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.stdButton2:hover, .stdButton4:hover{
+  box-shadow: 0px 0px 0px 0.2px;
+}
+
+
+.stdButton1, .stdButton2, .stdButton3, .stdButton4{
+  cursor: url(../pics/ellipse2.cur) 20 25, pointer;
 }
 
 .stdButton5, .stdButton6 {
@@ -223,4 +228,46 @@ html {
     background-size: 2em 2em, 1em 1em;
     background-position: -1.5em -1.5em, -1em -1em;
   }
+}
+
+.arrow{
+  margin-top: 57px;
+}
+
+.arrowButtons{
+  width: 420px;
+  margin-top: 38px;
+  margin-left: 138px;
+  display: -webkit-flex;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lfArrow, .rtArrow{
+  width: 50px;
+  height: 50px;
+  border: 3px solid $color1;
+  border-radius: 50%;
+  text-decoration: none;
+  color: $color1;
+}
+
+.lfArrowGray, .rtArrowGray{
+   width: 50px;
+   height: 50px;
+   background-color: #e5e5e5;
+   border-radius: 50%;
+   text-decoration: none;
+   color: #ffffff;
+ }
+
+.lfArrowPaint, .rtArrowPaint{
+  width: 50px;
+  height: 50px;
+  background-color: $color1;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #ffffff;
 }
