@@ -1,9 +1,10 @@
+//@import "~bootstrap/scss/bootstrap";
 @font-face {
   font-family: Lato-Black;
   font-style: normal;
   font-weight: normal;
-  //src: local('Lato-Black'), url(../fonts/Lato-Black.ttf);
-  src: local('Lato-Black');
+  //src: local('Lato-Black');
+  src: local('Lato-Black'), url(../fonts/Lato-Black.ttf);
 }
 
 $mainFont: Lato-Black, sans-serif;
@@ -122,9 +123,9 @@ html {
 }
 
 
-//.stdButton1, .stdButton2, .stdButton3, .stdButton4{
-//  cursor: url(../pics/ellipse2.cur) 20 25, pointer;
-//}
+.stdButton1, .stdButton2, .stdButton3, .stdButton4{
+  cursor: url(../img/ellipse2.cur) 20 25, pointer;
+}
 
 .stdButton5, .stdButton6 {
   border-radius: 0.3em;

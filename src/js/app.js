@@ -1,3 +1,9 @@
 import hello from "./hello";
 
-hello();
+import 'bootstrap';
+
+$(document).ready(
+    function () {
+        hello();
+    }
+);

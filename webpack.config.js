@@ -3,9 +3,14 @@ const path = require('path');
 const webpack = require('webpack');
 
 // plugins
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== 'production';
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ImageminWebpackPlugin = require('imagemin-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+
+let isProduction = (process.env.NODE_ENV === 'production');
 
 // module settings
 module.exports = {
@@ -29,47 +34,112 @@ module.exports = {
 
     //devserver configuration
     devServer: {
-        contentBase: './app'
+        contentBase: './app',
+        historyApiFallback:{
+            index:'./app/index.html'
+        },
     },
+
+    devtool: (isProduction) ? '' : 'inline-source-map',
 
     module: {
         rules: [
             //scss
             {
-                // test: /\.scss$/,
-                // use: ExtractTextPlugin.extract({
-                //     use: [
-                //         {
-                //             loader: 'css-loader',
-                //             options: {sourceMap: true}
-                //         },
-                //         {
-                //             loader: 'sass-loader',
-                //             options: {sourceMap: true}
-                //         },
-                //     ],
-                //     fallback: 'style-loader',
-                // })
-                test: /\.(sa|sc|c)ss$/,
+                test: /\.scss$/,
+                use: ExtractTextPlugin.extract({
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {sourceMap: true}
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {sourceMap: true}
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {sourceMap: true}
+                        },
+                    ],
+                    fallback: 'style-loader',
+                }),
+            },
+
+            //image
+            {
+                test: /\.{png|gif|cur|jpe?g}$/,
+                loaders: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: '[path][name].[ext]',
+                        },
+                    },
+                    'img-loader',
+                ]
+            },
+
+            //fonts
+            {
+                test: /\.{woff|woff2|eot|ttf|otf}$/,
                 use: [
-                    devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    // 'postcss-loader',
-                    'sass-loader',
-                ],
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: '[path][name].[ext]',
+                        }
+                    }
+                ]
+            },
+
+            //svg
+            {
+                test: /\.svg$/,
+                loader: "svg-url-loader",
             },
         ],
     },
 
     plugins: [
-        // new ExtractTextPlugin(
-        //     './css/[name].css'
-        // ),
-        new MiniCssExtractPlugin(
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            jquery: 'jquery',
+            Popper: ['popper.js', 'default'],
+        }),
+        new ExtractTextPlugin(
             './css/[name].css'
-            // filename: devMode ? './css/[name].css' : '[name].[hash].css',
-            // chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
         ),
+        new CleanWebpackPlugin('dist'),
+        new CopyWebpackPlugin(
+            [
+                {from: './img', to: 'img'}
+            ],
+            {
+                ignore: [
+                    {glob: 'svg/*'},
+                ]
+            }
+        )
     ],
-
 };
+
+//production only
+if (isProduction){
+    module.exports.plugins.push(
+        new UglifyjsWebpackPlugin({
+            sourceMap: true
+        }),
+    );
+    module.exports.plugins.push(
+        new ImageminWebpackPlugin({
+            test: /\.{png|gif|jpe?g|svg}$/
+        }),
+    );
+    module.exports.plugins.push(
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        }),
+    );
+}
