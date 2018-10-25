@@ -4,10 +4,11 @@
   "description": "fullstack-development_test2",
   "main": "src/js/app.js",
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
-    "production": "set NODE_ENV=production webpack"
+    "build": "webpack --mode=development",
+    "production": "webpack --mode=production",
+    "watch": "webpack --mode=development --watch",
+    "start": "webpack-dev-server --open --mode=development",
+    "clear": "del-cli dist"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,9 @@
     "imagemin-webpack-plugin": "^2.3.0",
     "img-loader": "^3.0.1",
     "node-sass": "^4.9.4",
+    "optimize-css-assets-webpack-plugin": "^4.0.3",
     "postcss-loader": "^3.0.0",
+    "resolve-url-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "svg-url-loader": "^2.3.2",
